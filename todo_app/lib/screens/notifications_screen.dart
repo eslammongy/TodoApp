@@ -15,10 +15,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Colors.teal,
-            systemNavigationBarColor: Colors.deepOrange),
-        backgroundColor: context.theme.backgroundColor,
         leading: IconButton(
             onPressed: () => Get.back(),
             icon: const Icon(Icons.arrow_back_ios)),
@@ -29,7 +25,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               color: Colors.white,
               fontSize: 20,
               fontFamily: "Roboto",
-              fontWeight: FontWeight.w400),
+              fontWeight: FontWeight.w800),
         ),
       ),
       body: SafeArea(
@@ -37,12 +33,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(
-            height: 20,
+            height: 15,
           ),
           Column(
             children: const [
               Text(
-                "Hello Eslam",
+                "Hello eslam",
                 style: TextStyle(
                     color: darkGreyClr,
                     fontSize: 20,
