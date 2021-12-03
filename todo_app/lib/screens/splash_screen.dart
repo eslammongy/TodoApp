@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:todo_app/constants/theme.dart';
 
 import 'home_screen.dart';
 
@@ -25,14 +25,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff363636),
       body: Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(
-                begin: Alignment.bottomLeft,
-                end: Alignment.topRight,
-                stops: [0.0, 0.4, 1.0],
-                colors: [Colors.black, Colors.black45, Colors.black54])),
+                begin: AlignmentDirectional.bottomEnd,
+                end: AlignmentDirectional.topStart,
+                colors: [Colors.black45, Colors.black54, Colors.black87])),
         child: Column(
           children: [
             SizedBox(
@@ -54,18 +52,20 @@ class _SplashScreenState extends State<SplashScreen> {
               'My Helper',
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w800,
-                  fontFamily: "Island Namina"),
+                  fontSize: 22,
+                  letterSpacing: 1.0,
+                  fontFamily: "Island Namina",
+                  fontWeight: FontWeight.w800),
             ),
             const Spacer(),
             const Text(
               'Manage Your Task',
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "Roboto"),
+                  fontSize: 18,
+                  letterSpacing: 1.0,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.w400),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,

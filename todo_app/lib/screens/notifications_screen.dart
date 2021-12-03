@@ -15,19 +15,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: const Icon(Icons.arrow_back_ios)),
-        centerTitle: true,
-        title: const Text(
-          "Notification",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontFamily: "Roboto",
-              fontWeight: FontWeight.w800),
-        ),
-      ),
+          leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: const Icon(Icons.arrow_back_ios)),
+          centerTitle: true,
+          title: Text(
+            "Notification",
+            style: headingStyle,
+          )),
       body: SafeArea(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,25 +31,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
             height: 15,
           ),
           Column(
-            children: const [
+            children: [
               Text(
                 "Hello eslam",
-                style: TextStyle(
-                    color: darkGreyClr,
-                    fontSize: 20,
-                    fontFamily: "Island Namina",
-                    fontWeight: FontWeight.w800),
+                style: subHeadingStyle,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
                 "You have a new reminder",
-                style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 18,
-                    fontFamily: "Roboto",
-                    fontWeight: FontWeight.w400),
+                style: titleStyle,
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/screens/splash_screen.dart';
+import 'package:todo_app/services/theme_services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeServices().themeMode,
       theme: Themes.lightTheme,
       darkTheme: Themes.darkTheme,
       home: const SplashScreen(),
