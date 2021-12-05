@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_app/constants/size_config.dart';
 import 'package:todo_app/constants/theme.dart';
+import 'package:todo_app/screens/add_new_task.dart';
 import 'package:todo_app/screens/widgets/input_from_field.dart';
 import 'package:todo_app/services/theme_services.dart';
 import 'widgets/custom__button.dart';
@@ -29,7 +31,9 @@ class HomeScreen extends StatelessWidget {
         children: [
           CustomButton(
             label: "Click Me",
-            onTap: () {},
+            onTap: () {
+              Get.to(const AddNewTask());
+            },
             height: 50,
             width: 150,
           ),

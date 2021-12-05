@@ -8,6 +8,7 @@ const Color orangeClr = Color(0xCFFF5403);
 const Color pinkClr = Color(0xFFff4667);
 const Color purpleClr = Color(0xFF6E3CBC);
 const Color greenClr = Color(0xFF49FF00);
+
 const Color white = Colors.white;
 const primaryClr = blueClr;
 const Color darkGreyClr = Color(0xFF2B2B2B);

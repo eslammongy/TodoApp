@@ -21,20 +21,19 @@ class CustomeInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(top: 10),
-        margin: const EdgeInsets.only(left: 15),
+        margin: const EdgeInsets.only(top: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Title",
+              title,
               style: titleStyle,
             ),
             Container(
               height: 55,
               width: SizeConfig.screenWidth,
-              padding: const EdgeInsets.only(top: 10),
-              margin: const EdgeInsets.only(left: 15),
+              padding: const EdgeInsets.only(left: 10),
+              margin: const EdgeInsets.only(top: 8),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.grey, width: 1.5)),
