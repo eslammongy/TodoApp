@@ -17,21 +17,21 @@ const Color darkHeaderClr = Color(0xFF424242);
 class Themes {
   static final lightTheme = ThemeData(
       appBarTheme: const AppBarTheme(
-        backgroundColor: primaryClr,
+        backgroundColor: Colors.white,
         systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: primaryClr, systemNavigationBarColor: primaryClr),
+            statusBarColor: Colors.white,
+            systemNavigationBarColor: Colors.white),
       ),
       primaryColor: primaryClr,
-      backgroundColor: darkGreyClr,
+      backgroundColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
       brightness: Brightness.light);
 
   static final darkTheme = ThemeData(
       appBarTheme: const AppBarTheme(
-        backgroundColor: darkHeaderClr,
+        backgroundColor: darkGreyClr,
         systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: darkHeaderClr,
-            systemNavigationBarColor: darkGreyClr),
+            statusBarColor: darkGreyClr, systemNavigationBarColor: darkGreyClr),
       ),
       primaryColor: darkGreyClr,
       backgroundColor: darkGreyClr,
@@ -42,7 +42,7 @@ class Themes {
 TextStyle get headingStyle {
   return GoogleFonts.openSans(
       textStyle: TextStyle(
-          color: Get.isDarkMode ? Colors.white : Colors.black54,
+          color: Get.isDarkMode ? Colors.white : darkGreyClr,
           fontSize: 22,
           letterSpacing: 1.0,
           fontWeight: FontWeight.w800));
@@ -51,7 +51,7 @@ TextStyle get headingStyle {
 TextStyle get subHeadingStyle {
   return GoogleFonts.openSans(
       textStyle: TextStyle(
-          color: Get.isDarkMode ? Colors.white : Colors.black54,
+          color: Get.isDarkMode ? Colors.white : darkGreyClr,
           fontSize: 20,
           letterSpacing: 1.0,
           fontWeight: FontWeight.w700));
@@ -60,7 +60,7 @@ TextStyle get subHeadingStyle {
 TextStyle get titleStyle {
   return GoogleFonts.openSans(
       textStyle: TextStyle(
-          color: Get.isDarkMode ? Colors.white : Colors.black54,
+          color: Get.isDarkMode ? Colors.white : darkGreyClr,
           fontSize: 18,
           letterSpacing: 1.0,
           fontWeight: FontWeight.w600));
@@ -78,7 +78,7 @@ TextStyle get subTitleStyle {
 TextStyle get bodyStyle {
   return GoogleFonts.openSans(
       textStyle: TextStyle(
-          color: Get.isDarkMode ? Colors.grey[200] : Colors.black54,
+          color: Get.isDarkMode ? Colors.grey[200] : darkGreyClr,
           fontSize: 15,
           letterSpacing: 1.0,
           fontWeight: FontWeight.w400));
@@ -87,7 +87,7 @@ TextStyle get bodyStyle {
 TextStyle get body2Style {
   return GoogleFonts.openSans(
       textStyle: TextStyle(
-          color: Get.isDarkMode ? Colors.grey[200] : Colors.black54,
+          color: Get.isDarkMode ? Colors.grey[200] : darkGreyClr,
           fontSize: 15,
           letterSpacing: 1.0,
           fontWeight: FontWeight.w400));

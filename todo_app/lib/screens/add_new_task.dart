@@ -6,6 +6,8 @@ import 'package:todo_app/controllers/task_controller.dart';
 import 'package:todo_app/screens/widgets/custom__button.dart';
 import 'package:todo_app/screens/widgets/input_from_field.dart';
 
+import 'widgets/custom_appbar.dart';
+
 class AddNewTask extends StatefulWidget {
   const AddNewTask({Key? key}) : super(key: key);
 
@@ -32,7 +34,15 @@ class _AddNewTaskState extends State<AddNewTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: buildCustomAppBar(
+            context: context,
+            title: "Add New Task",
+            widget: IconButton(
+                onPressed: () => Get.back(),
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Get.isDarkMode ? orangeClr : darkGreyClr,
+                ))),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: SingleChildScrollView(
