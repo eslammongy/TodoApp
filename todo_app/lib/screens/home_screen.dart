@@ -8,10 +8,12 @@ import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/controllers/task_controller.dart';
 import 'package:todo_app/screens/add_new_task.dart';
 import 'package:todo_app/screens/widgets/custom_appbar.dart';
+import 'package:todo_app/services/notification_services.dart';
 import 'package:todo_app/services/theme_services.dart';
 import 'widgets/custom__button.dart';
 
 class HomeScreen extends StatefulWidget {
+  // ignore: prefer_const_constructors_in_immutables
   HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -22,6 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final TaskController taskController = Get.put(TaskController());
 
   DateTime selectedDate = DateTime.now();
+  late LocalNotificationServices notificationHelper;
+  @override
+  void initState() {
+    super.initState();
+    notificationHelper = LocalNotificationServices();
+    notificationHelper.requestIosPermission();
+    notificationHelper.intilizationSettings();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +41,13 @@ class _HomeScreenState extends State<HomeScreen> {
           context: context,
           title: "Home",
           widget: IconButton(
-              onPressed: () => ThemeServices().switchThemeMode(),
+              onPressed: () {
+                ThemeServices().switchThemeMode();
+                notificationHelper.displayNotifications(
+                    title: "Theme", content: "App Theme is changed.");
+
+                notificationHelper.scheduleAppNotifications();
+              },
               icon: Icon(
                 Get.isDarkMode
                     ? Icons.wb_sunny_outlined
@@ -39,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Get.isDarkMode ? orangeClr : darkGreyClr,
               ))),
       body: Column(
-        children: [buildTaskBar(), displayCalenderView()],
+        children: [buildTaskBar(), displayCalenderView(), noTasksFound()],
       ),
     );
   }
@@ -110,5 +126,66 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
         ));
+  }
+
+  displayAllTasks() {
+    return Expanded(child: Obx(() {
+      if (taskController.tasksList.isEmpty) {
+        return noTasksFound();
+      } else {
+        return Container(
+          height: 0,
+        );
+      }
+    }));
+  }
+
+  Widget noTasksFound() {
+    return Stack(
+      children: [
+        AnimatedPositioned(
+          duration: Duration(microseconds: 3000),
+          child: SingleChildScrollView(
+              child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            direction: SizeConfig.orientation == Orientation.landscape
+                ? Axis.horizontal
+                : Axis.vertical,
+            children: [
+              SizeConfig.orientation == Orientation.landscape
+                  ? const SizedBox(
+                      height: 50,
+                    )
+                  : const SizedBox(
+                      height: 100,
+                    ),
+              Image.asset(
+                "assets/images/empty_box.png",
+                fit: BoxFit.contain,
+                width: 200,
+                height: 200,
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                child: Text(
+                  "You don't have any task yet!",
+                  style: subHeadingStyle,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizeConfig.orientation == Orientation.landscape
+                  ? const SizedBox(
+                      height: 30,
+                    )
+                  : const SizedBox(
+                      height: 100,
+                    ),
+            ],
+          )),
+        )
+      ],
+    );
   }
 }
