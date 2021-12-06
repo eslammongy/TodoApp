@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_app/constants/theme.dart';
 
 class CustomButton extends StatelessWidget {
@@ -21,7 +22,8 @@ class CustomButton extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: orangeClr),
+          borderRadius: BorderRadius.circular(10),
+          color: Get.isDarkMode ? orangeClr : blueClr),
       child: TextButton(
         child: Text(
           label,

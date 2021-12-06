@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:todo_app/constants/theme.dart';
 
 import 'home_screen.dart';
 
@@ -18,13 +17,14 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(
