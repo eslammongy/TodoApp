@@ -9,6 +9,7 @@ import 'package:todo_app/controllers/task_controller.dart';
 import 'package:todo_app/model/task.dart';
 import 'package:todo_app/screens/add_new_task.dart';
 import 'package:todo_app/screens/widgets/custom_appbar.dart';
+import 'package:todo_app/screens/widgets/task_bottom_sheet.dart';
 import 'package:todo_app/screens/widgets/task_tile.dart';
 import 'package:todo_app/services/notification_services.dart';
 import 'package:todo_app/services/theme_services.dart';
@@ -57,20 +58,90 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Get.isDarkMode ? orangeClr : darkGreyClr,
               ))),
       body: Column(
-        children: [buildTaskBar(), displayCalenderView(), showTaskItems()],
+        children: [
+          buildTaskBar(),
+          displayCalenderView(),
+          showTaskItems(context)
+        ],
       ),
     );
   }
 
-  showTaskItems() {
+  showTaskItems(BuildContext context) {
+    var task = Task(
+        title: "Fitness",
+        note: "Note me on time",
+        startTime: "09:00",
+        isCompleted: 0,
+        endTime: "12:10",
+        color: 3);
     return Expanded(
-        child: TaskTile(Task(
-            title: "Fitness",
-            note: "Note me on time",
-            startTime: "09:00",
-            isCompleted: 1,
-            endTime: "12:10",
-            color: 3)));
+      child: GestureDetector(
+          onTap: () {
+            displayBottomSheet(context, task);
+          },
+          child: TaskTile(task)),
+    );
+  }
+
+  displayBottomSheet(BuildContext context, Task task) {
+    Get.bottomSheet(SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.only(top: 5),
+        width: SizeConfig.screenWidth,
+        height: (SizeConfig.orientation == Orientation.landscape)
+            ? (task.isCompleted == 1
+                ? SizeConfig.screenHeight * 0.6
+                : SizeConfig.screenHeight * 0.8)
+            : (task.isCompleted == 1
+                ? SizeConfig.screenHeight * 0.45
+                : SizeConfig.screenHeight * 0.40),
+        color: Get.isDarkMode ? darkGreyClr : Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 8,
+              width: 120,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Get.isDarkMode ? Colors.grey[700] : Colors.grey[200]),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            task.isCompleted == 1
+                ? Container()
+                : buildTaskBottomSheet(
+                    label: "Task Completed",
+                    onTap: () {
+                      Get.back();
+                    },
+                    color: primaryClr),
+            Divider(
+              color: Get.isDarkMode ? Colors.grey : darkGreyClr,
+            ),
+            buildTaskBottomSheet(
+                label: "Delete Task",
+                onTap: () {
+                  Get.back();
+                },
+                color: primaryClr),
+            Divider(
+              color: Get.isDarkMode ? Colors.grey : darkGreyClr,
+            ),
+            buildTaskBottomSheet(
+                label: "Cancel",
+                onTap: () {
+                  Get.back();
+                },
+                color: primaryClr),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 
   Widget buildTaskBar() {

@@ -20,7 +20,7 @@ class LocalNotificationServices {
   intilizationSettings() async {
     tz.initializeTimeZones();
     final AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('task');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
     final IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
@@ -70,6 +70,7 @@ class LocalNotificationServices {
         const AndroidNotificationDetails('your channel id', 'your channel name',
             channelDescription: 'your channel description',
             importance: Importance.max,
+            icon: '@mipmap/ic_launcher',
             priority: Priority.high,
             playSound: true,
             ticker: 'ticker');
