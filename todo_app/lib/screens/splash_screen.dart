@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:todo_app/constants/theme.dart';
 
 import 'home_screen.dart';
 
@@ -24,20 +26,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: darkGreyClr,
+          systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: Colors.black54,
+              systemNavigationBarColor: Colors.black54)),
+      backgroundColor: darkGreyClr,
       body: Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: AlignmentDirectional.bottomEnd,
-                end: AlignmentDirectional.topStart,
-                colors: [Colors.black45, Colors.black54, Colors.black87])),
+        color: darkGreyClr,
         child: Column(
           children: [
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.20,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.10,
             ),
             Container(
               padding: EdgeInsets.zero,
