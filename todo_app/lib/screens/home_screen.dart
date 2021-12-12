@@ -3,18 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:todo_app/constants/size_config.dart';
 import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/controllers/task_controller.dart';
 import 'package:todo_app/model/task.dart';
-import 'package:todo_app/screens/add_new_task.dart';
 import 'package:todo_app/screens/widgets/custom_appbar.dart';
 import 'package:todo_app/screens/widgets/task_bottom_sheet.dart';
 import 'package:todo_app/screens/widgets/task_tile.dart';
 import 'package:todo_app/services/notification_services.dart';
 import 'package:todo_app/services/theme_services.dart';
-import 'widgets/custom__button.dart';
 import 'widgets/display_task_upper_view.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,13 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
   final TaskController taskController = Get.put(TaskController());
 
   DateTime selectedDate = DateTime.now();
-  late LocalNotificationServices notificationHelper;
+  late NotifyHelper notificationHelper;
   @override
   void initState() {
     super.initState();
-    notificationHelper = LocalNotificationServices();
-    notificationHelper.requestIosPermission();
-    notificationHelper.intilizationSettings();
+    notificationHelper = NotifyHelper();
+    notificationHelper.requestIOSPermissions();
+    notificationHelper.initializeNotification();
   }
 
   @override
@@ -48,10 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
           widget: IconButton(
               onPressed: () {
                 ThemeServices().switchThemeMode();
-                notificationHelper.displayNotifications(
-                    title: "Theme", content: "App Theme is changed.");
-
-                notificationHelper.scheduleAppNotifications();
               },
               icon: Icon(
                 Get.isDarkMode
@@ -178,6 +171,10 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: taskController.tasksList.length,
           itemBuilder: (BuildContext context, int index) {
             var task = taskController.tasksList[index];
+            var hour = task.startTime.toString().split(":")[0];
+            var minute = task.startTime.toString().split(":")[1];
+            notificationHelper.scheduledNotification(
+                int.parse(hour), int.parse(minute), task);
             return AnimationConfiguration.staggeredList(
               position: index,
               duration: Duration(milliseconds: 1500),

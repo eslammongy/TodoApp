@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:todo_app/constants/theme.dart';
 
 class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
-
+  const NotificationScreen({Key? key, required this.payload}) : super(key: key);
+  final String payload;
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  final String _payload = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +59,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Row(children: const [
+                  Row(children: [
                     Icon(
                       Icons.text_format,
                       size: 30,
@@ -67,7 +68,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     SizedBox(
                       width: 15,
                     ),
-                    Text("Title",
+                    Text(_payload.toString().split("|")[0],
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -85,7 +86,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(children: const [
+                  Row(children: [
                     Icon(
                       Icons.description,
                       size: 30,
@@ -94,7 +95,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     SizedBox(
                       width: 15,
                     ),
-                    Text("description",
+                    Text(_payload.toString().split("|")[1],
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -113,7 +114,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(children: const [
+                  Row(children: [
                     Icon(
                       Icons.alarm_on_rounded,
                       size: 30,
@@ -122,7 +123,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     SizedBox(
                       width: 15,
                     ),
-                    Text("time",
+                    Text(_payload.toString().split("|")[2],
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
