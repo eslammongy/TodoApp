@@ -1,5 +1,6 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,7 @@ import 'package:todo_app/screens/widgets/task_tile.dart';
 import 'package:todo_app/services/notification_services.dart';
 import 'package:todo_app/services/theme_services.dart';
 import 'widgets/custom__button.dart';
+import 'widgets/display_task_upper_view.dart';
 
 class HomeScreen extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -59,28 +61,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ))),
       body: Column(
         children: [
-          buildTaskBar(),
+          buildTaskBar(
+              selectedDate: selectedDate, taskController: taskController),
           displayCalenderView(),
-          showTaskItems(context)
+          SizedBox(
+            height: 10,
+          ),
+          displayAllTasks()
         ],
       ),
-    );
-  }
-
-  showTaskItems(BuildContext context) {
-    var task = Task(
-        title: "Fitness",
-        note: "Note me on time",
-        startTime: "09:00",
-        isCompleted: 0,
-        endTime: "12:10",
-        color: 3);
-    return Expanded(
-      child: GestureDetector(
-          onTap: () {
-            displayBottomSheet(context, task);
-          },
-          child: TaskTile(task)),
     );
   }
 
@@ -144,39 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 
-  Widget buildTaskBar() {
-    return Container(
-      margin: const EdgeInsets.only(top: 10, left: 20, right: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                DateFormat.yMMMMd().format(selectedDate),
-                style: titleStyle,
-              ),
-              Text(
-                "Today",
-                style: subHeadingStyle,
-              )
-            ],
-          ),
-          CustomButton(
-            label: "+ Add Task",
-            onTap: () async {
-              await Get.to(() => const AddNewTask());
-              taskController.getAllTasks();
-            },
-            height: 50,
-            width: 130,
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget displayCalenderView() {
     return Container(
         margin: const EdgeInsets.only(top: 10, left: 15),
@@ -213,15 +169,29 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   displayAllTasks() {
-    return Expanded(child: Obx(() {
-      if (taskController.tasksList.isEmpty) {
-        return noTasksFound();
-      } else {
-        return Container(
-          height: 0,
-        );
-      }
-    }));
+    return Expanded(
+      child: ListView.builder(
+          scrollDirection: SizeConfig.orientation == Orientation.landscape
+              ? Axis.horizontal
+              : Axis.vertical,
+          physics: BouncingScrollPhysics(),
+          itemCount: taskController.tasksList.length,
+          itemBuilder: (BuildContext context, int index) {
+            var task = taskController.tasksList[index];
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              duration: Duration(milliseconds: 1500),
+              child: SlideAnimation(
+                  horizontalOffset: 300,
+                  child: FadeInAnimation(
+                      child: GestureDetector(
+                          onTap: () {
+                            displayBottomSheet(context, task);
+                          },
+                          child: TaskTile(task)))),
+            );
+          }),
+    );
   }
 
   Widget noTasksFound() {
