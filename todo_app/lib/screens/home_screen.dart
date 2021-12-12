@@ -6,8 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/constants/size_config.dart';
 import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/controllers/task_controller.dart';
+import 'package:todo_app/model/task.dart';
 import 'package:todo_app/screens/add_new_task.dart';
 import 'package:todo_app/screens/widgets/custom_appbar.dart';
+import 'package:todo_app/screens/widgets/task_tile.dart';
 import 'package:todo_app/services/notification_services.dart';
 import 'package:todo_app/services/theme_services.dart';
 import 'widgets/custom__button.dart';
@@ -55,9 +57,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Get.isDarkMode ? orangeClr : darkGreyClr,
               ))),
       body: Column(
-        children: [buildTaskBar(), displayCalenderView(), noTasksFound()],
+        children: [buildTaskBar(), displayCalenderView(), showTaskItems()],
       ),
     );
+  }
+
+  showTaskItems() {
+    return Expanded(
+        child: TaskTile(Task(
+            title: "Fitness",
+            note: "Note me on time",
+            startTime: "09:00",
+            isCompleted: 1,
+            endTime: "12:10",
+            color: 3)));
   }
 
   Widget buildTaskBar() {
