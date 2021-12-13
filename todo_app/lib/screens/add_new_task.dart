@@ -64,7 +64,9 @@ class _AddNewTaskState extends State<AddNewTask> {
                   title: "Date",
                   hint: DateFormat.yMd().format(selectedDate),
                   widget: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        getUserSelectedDate();
+                      },
                       icon: const Icon(
                         Icons.calendar_today_outlined,
                         color: Colors.grey,
@@ -77,7 +79,9 @@ class _AddNewTaskState extends State<AddNewTask> {
                       title: "Start Time",
                       hint: startTime,
                       widget: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            getUserSelectedTime(isStartTime: true);
+                          },
                           icon: const Icon(
                             Icons.alarm_on_rounded,
                             color: Colors.grey,
@@ -91,7 +95,9 @@ class _AddNewTaskState extends State<AddNewTask> {
                       title: "End Time",
                       hint: endTime,
                       widget: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            getUserSelectedTime(isStartTime: false);
+                          },
                           icon: const Icon(
                             Icons.alarm_rounded,
                             color: Colors.grey,
@@ -190,6 +196,41 @@ class _AddNewTaskState extends State<AddNewTask> {
             ),
           ),
         ));
+  }
+
+  getUserSelectedDate() async {
+    DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2016),
+        lastDate: DateTime(2030));
+
+    if (pickedDate != null) {
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    } else
+      print("Null Date");
+  }
+
+  getUserSelectedTime({required bool isStartTime}) async {
+    TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: isStartTime
+            ? TimeOfDay.fromDateTime(DateTime.now())
+            : TimeOfDay.fromDateTime(
+                DateTime.now().add(Duration(minutes: 15))));
+
+    if (pickedTime != null) {
+      String formatedTime = pickedTime.format(context);
+      if (isStartTime) {
+        setState(() => startTime = formatedTime);
+      } else if (!isStartTime) {
+        setState(() => endTime = formatedTime);
+      }
+    } else {
+      print("No Time Picked");
+    }
   }
 
   validateData() {
