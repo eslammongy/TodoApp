@@ -34,9 +34,9 @@ class DBHelper {
     }
   }
 
-  static Future<int> saveNewTask(Task? task) async {
+  static Future<int> saveNewTask({required Task task}) async {
     print("Call Insert Function");
-    return await taskDB!.insert(tabelName, task!.toJson());
+    return await taskDB!.insert(tabelName, task.toJson());
   }
 
   static Future<int> deleteSelectedTask(Task task) async {

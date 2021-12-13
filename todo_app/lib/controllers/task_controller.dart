@@ -1,50 +1,27 @@
 import 'package:get/get.dart';
+import 'package:todo_app/db/db_helper.dart';
 import 'package:todo_app/model/task.dart';
 
 class TaskController extends GetxController {
-  final tasksList = <Task>[
-    Task(
-        id: 1,
-        title: "Fitness",
-        note: "Note me on time",
-        startTime: "09:00",
-        isCompleted: 0,
-        endTime: "12:10",
-        color: 0),
-    Task(
-        id: 1,
-        title: "Fitness",
-        note: "Note me on time",
-        startTime: "09:00",
-        isCompleted: 1,
-        endTime: "12:10",
-        color: 3),
-    Task(
-        id: 1,
-        title: "Fitness",
-        note: "Note me on time",
-        startTime: "09:00",
-        isCompleted: 1,
-        endTime: "12:10",
-        color: 1),
-    Task(
-        id: 1,
-        title: "Fitness",
-        note: "Note me on time",
-        startTime: "09:00",
-        isCompleted: 0,
-        endTime: "12:10",
-        color: 2),
-    Task(
-        id: 1,
-        title: "Fitness",
-        note: "Note me on time",
-        startTime: "09:00",
-        isCompleted: 0,
-        endTime: "12:10",
-        color: 4)
-  ];
+  final RxList<Task> tasksList = <Task>[].obs;
 
-  addNewTask({required Task task}) async {}
-  getAllTasks() {}
+  Future<int> addNewTask({required Task task}) {
+    return DBHelper.saveNewTask(task: task);
+  }
+
+  Future<void> getAllTasks() async {
+    final List<Map<String, dynamic>> tasks = await DBHelper.query();
+    tasksList
+        .assignAll(tasks.map((element) => Task.fromJson(element)).toList());
+  }
+
+  void deleteSelectedTask({required Task task}) async {
+    await DBHelper.deleteSelectedTask(task);
+    getAllTasks();
+  }
+
+  void markTaskAsCompleted({required int taskID}) async {
+    await DBHelper.updateSpecificRow(taskID: taskID);
+    getAllTasks();
+  }
 }
