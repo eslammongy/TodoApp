@@ -22,4 +22,18 @@ class Task {
     this.remind,
     this.repeat,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'note': note,
+      'startTime': startTime,
+      'endTime': endTime,
+      'isCompleted': isCompleted,
+      'remind': remind,
+      'color': color,
+      'repeat': repeat,
+    };
+  }
 }
