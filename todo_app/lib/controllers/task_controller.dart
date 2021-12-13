@@ -44,5 +44,7 @@ class TaskController extends GetxController {
         endTime: "12:10",
         color: 4)
   ];
+
+  addNewTask({required Task task}) async {}
   getAllTasks() {}
 }

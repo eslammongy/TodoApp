@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/controllers/task_controller.dart';
+import 'package:todo_app/model/task.dart';
 import 'package:todo_app/screens/widgets/custom__button.dart';
+import 'package:todo_app/screens/widgets/flusher_bar.dart';
 import 'package:todo_app/screens/widgets/input_from_field.dart';
 
 import 'widgets/custom_appbar.dart';
@@ -176,13 +178,41 @@ class _AddNewTaskState extends State<AddNewTask> {
                   children: [
                     buildColorPallet(),
                     CustomButton(
-                        label: "Save", onTap: () {}, height: 50, width: 100),
+                        label: "Save",
+                        onTap: () {
+                          validateData();
+                        },
+                        height: 50,
+                        width: 100),
                   ],
                 )
               ],
             ),
           ),
         ));
+  }
+
+  validateData() {
+    if (titleController.text.isNotEmpty && descController.text.isNotEmpty) {
+      insertNewTask();
+      Get.back();
+    } else {
+      showFlushBar(context, "Some Required Date Is Empty", "Error");
+    }
+  }
+
+  insertNewTask() async {
+    int insertedValue = await taskController.addNewTask(
+        task: Task(
+            title: titleController.text,
+            note: descController.text,
+            date: DateFormat.yMd().format(selectedDate),
+            startTime: startTime,
+            endTime: endTime,
+            remind: selectedRemind,
+            repeat: selectedRebeat,
+            color: selectedColor,
+            isCompleted: 0));
   }
 
   buildColorPallet() {

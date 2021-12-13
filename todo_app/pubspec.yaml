@@ -45,6 +45,7 @@ dependencies:
   rxdart: any
   google_fonts: any
   flutter_native_timezone: any
+  another_flushbar: ^1.10.25
 
 dev_dependencies:
   flutter_test:
