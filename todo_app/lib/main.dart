@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:todo_app/constants/theme.dart';
+import 'package:todo_app/db/db_helper.dart';
 import 'package:todo_app/screens/splash_screen.dart';
 import 'package:todo_app/services/theme_services.dart';
 
 void main() async {
-  runApp(const MyApp());
   WidgetsFlutterBinding.ensureInitialized;
+  await DBHelper.initDB();
+  await GetStorage.init();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
