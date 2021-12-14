@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/constants/size_config.dart';
 import 'package:todo_app/constants/theme.dart';
-import 'package:todo_app/model/task.dart';
 
 Widget buildTaskBottomSheet(
     {required String label,

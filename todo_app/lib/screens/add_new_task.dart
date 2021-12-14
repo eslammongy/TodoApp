@@ -243,7 +243,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   }
 
   insertNewTask() async {
-    int insertedValue = await taskController.addNewTask(
+    await taskController.addNewTask(
         task: Task(
             title: titleController.text,
             note: descController.text,

@@ -7,7 +7,7 @@ import 'package:todo_app/screens/splash_screen.dart';
 import 'package:todo_app/services/theme_services.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized;
+  WidgetsFlutterBinding.ensureInitialized();
   await DBHelper.initDB();
   await GetStorage.init();
   runApp(const MyApp());

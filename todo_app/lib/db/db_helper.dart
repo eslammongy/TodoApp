@@ -1,4 +1,3 @@
-import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todo_app/model/task.dart';
 

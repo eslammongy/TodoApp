@@ -1,7 +1,5 @@
-import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/controllers/task_controller.dart';
