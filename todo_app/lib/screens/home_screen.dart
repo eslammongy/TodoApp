@@ -80,7 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
             : (task.isCompleted == 1
                 ? SizeConfig.screenHeight * 0.45
                 : SizeConfig.screenHeight * 0.40),
-        color: Get.isDarkMode ? darkGreyClr : Colors.white,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Get.isDarkMode ? darkGreyClr : Colors.white,
+        ),
         child: Column(
           children: [
             Container(
@@ -111,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   taskController.deleteSelectedTask(task: task);
                   Get.back();
                 },
-                color: primaryClr),
+                color: Colors.red[800]!),
             Divider(
               color: Get.isDarkMode ? Colors.grey : darkGreyClr,
             ),

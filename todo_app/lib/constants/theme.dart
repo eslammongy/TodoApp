@@ -20,6 +20,7 @@ class Themes {
         backgroundColor: Colors.white,
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.white,
+            statusBarIconBrightness: Brightness.dark,
             systemNavigationBarColor: Colors.white),
       ),
       primaryColor: primaryClr,
@@ -31,7 +32,9 @@ class Themes {
       appBarTheme: const AppBarTheme(
         backgroundColor: darkGreyClr,
         systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: darkGreyClr, systemNavigationBarColor: darkGreyClr),
+            statusBarIconBrightness: Brightness.light,
+            statusBarColor: darkGreyClr,
+            systemNavigationBarColor: darkGreyClr),
       ),
       primaryColor: darkGreyClr,
       backgroundColor: darkGreyClr,

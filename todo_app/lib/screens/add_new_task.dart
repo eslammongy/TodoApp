@@ -183,13 +183,20 @@ class _AddNewTaskState extends State<AddNewTask> {
                 Row(
                   children: [
                     buildColorPallet(),
-                    CustomButton(
-                        label: "Save",
-                        onTap: () {
-                          validateData();
-                        },
-                        height: 50,
-                        width: 100),
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CustomButton(
+                            label: "Save",
+                            onTap: () {
+                              validateData();
+                            },
+                            height: 50,
+                            width: 100),
+                      ],
+                    ),
                   ],
                 )
               ],
