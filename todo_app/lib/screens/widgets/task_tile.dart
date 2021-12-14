@@ -45,10 +45,10 @@ class TaskTile extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.access_time_rounded,
                         size: 20,
-                        color: Colors.grey,
+                        color: Colors.grey[200],
                       ),
                       const SizedBox(
                         width: 10,
@@ -57,7 +57,7 @@ class TaskTile extends StatelessWidget {
                         "${task.startTime} - ${task.endTime}",
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
-                                color: Colors.grey,
+                                color: Colors.blueGrey[100],
                                 fontSize: 15,
                                 letterSpacing: 1.0,
                                 fontWeight: FontWeight.w600)),
@@ -72,7 +72,7 @@ class TaskTile extends StatelessWidget {
                     style: GoogleFonts.openSans(
                         textStyle: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 16,
                             letterSpacing: 1.0,
                             fontWeight: FontWeight.w600)),
                   )
@@ -81,9 +81,9 @@ class TaskTile extends StatelessWidget {
             )),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10),
-              height: 60,
-              width: 0.5,
-              color: Colors.blueGrey,
+              height: 68,
+              width: 1,
+              color: Colors.blueGrey[100],
             ),
             RotatedBox(
               quarterTurns: 3,

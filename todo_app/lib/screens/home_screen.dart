@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/constants/size_config.dart';
 import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/controllers/task_controller.dart';
@@ -33,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     notificationHelper = NotifyHelper();
     notificationHelper.requestIOSPermissions();
     notificationHelper.initializeNotification();
+    taskController.getAllTasks();
   }
 
   @override
@@ -163,31 +165,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
   displayAllTasks() {
     return Expanded(
-      child: ListView.builder(
-          scrollDirection: SizeConfig.orientation == Orientation.landscape
-              ? Axis.horizontal
-              : Axis.vertical,
-          physics: BouncingScrollPhysics(),
-          itemCount: taskController.tasksList.length,
-          itemBuilder: (BuildContext context, int index) {
-            var task = taskController.tasksList[index];
-            var hour = task.startTime.toString().split(":")[0];
-            var minute = task.startTime.toString().split(":")[1];
-            notificationHelper.scheduledNotification(
-                int.parse(hour), int.parse(minute), task);
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              duration: Duration(milliseconds: 1500),
-              child: SlideAnimation(
-                  horizontalOffset: 300,
-                  child: FadeInAnimation(
-                      child: GestureDetector(
-                          onTap: () {
-                            displayBottomSheet(context, task);
-                          },
-                          child: TaskTile(task)))),
-            );
-          }),
+      child: Obx(() {
+        if (taskController.tasksList.isEmpty) {
+          return noTasksFound();
+        } else {
+          return RefreshIndicator(
+            onRefresh: () => taskController.getAllTasks(),
+            child: ListView.builder(
+                scrollDirection: SizeConfig.orientation == Orientation.landscape
+                    ? Axis.horizontal
+                    : Axis.vertical,
+                physics: BouncingScrollPhysics(),
+                itemCount: taskController.tasksList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var task = taskController.tasksList[index];
+
+                  var date = DateFormat.jm().parse(task.startTime!);
+                  var taskTime = DateFormat('HH:mm').format(date);
+                  notificationHelper.scheduledNotification(
+                      int.parse(taskTime.toString().split(':')[0]),
+                      int.parse(taskTime.toString().split(':')[1]),
+                      task);
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: Duration(milliseconds: 1500),
+                    child: SlideAnimation(
+                        horizontalOffset: 300,
+                        child: FadeInAnimation(
+                            child: GestureDetector(
+                                onTap: () {
+                                  displayBottomSheet(context, task);
+                                },
+                                child: TaskTile(task)))),
+                  );
+                }),
+          );
+        }
+      }),
     );
   }
 
@@ -195,46 +209,49 @@ class _HomeScreenState extends State<HomeScreen> {
     return Stack(
       children: [
         AnimatedPositioned(
-          duration: Duration(microseconds: 3000),
-          child: SingleChildScrollView(
-              child: Wrap(
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            direction: SizeConfig.orientation == Orientation.landscape
-                ? Axis.horizontal
-                : Axis.vertical,
-            children: [
-              SizeConfig.orientation == Orientation.landscape
-                  ? const SizedBox(
-                      height: 50,
-                    )
-                  : const SizedBox(
-                      height: 100,
-                    ),
-              Image.asset(
-                "assets/images/empty_box.png",
-                fit: BoxFit.contain,
-                width: 200,
-                height: 200,
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                child: Text(
-                  "You don't have any task yet!",
-                  style: subHeadingStyle,
-                  textAlign: TextAlign.center,
+          duration: Duration(microseconds: 2000),
+          child: RefreshIndicator(
+            onRefresh: () => taskController.getAllTasks(),
+            child: SingleChildScrollView(
+                child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              direction: SizeConfig.orientation == Orientation.landscape
+                  ? Axis.horizontal
+                  : Axis.vertical,
+              children: [
+                SizeConfig.orientation == Orientation.landscape
+                    ? const SizedBox(
+                        height: 50,
+                      )
+                    : const SizedBox(
+                        height: 100,
+                      ),
+                Image.asset(
+                  "assets/images/empty_box.png",
+                  fit: BoxFit.contain,
+                  width: 200,
+                  height: 200,
                 ),
-              ),
-              SizeConfig.orientation == Orientation.landscape
-                  ? const SizedBox(
-                      height: 30,
-                    )
-                  : const SizedBox(
-                      height: 100,
-                    ),
-            ],
-          )),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                  child: Text(
+                    "You don't have any task yet!",
+                    style: subHeadingStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizeConfig.orientation == Orientation.landscape
+                    ? const SizedBox(
+                        height: 30,
+                      )
+                    : const SizedBox(
+                        height: 100,
+                      ),
+              ],
+            )),
+          ),
         )
       ],
     );

@@ -6,9 +6,9 @@ class DBHelper {
   static const int dbVersion = 1;
   static const String tabelName = 'tasks';
 
-  static Future initDB() async {
+  static Future<void> initDB() async {
     if (taskDB != null) {
-      print('Task Database Initialized');
+      print('Task Database Already Initialized');
       return;
     } else {
       try {
@@ -17,7 +17,7 @@ class DBHelper {
           dbPath,
           version: dbVersion,
           onCreate: (db, version) async {
-            await db.execute('CREATE TABLE $tabelName('
+            return db.execute('CREATE TABLE $tabelName('
                 'id INTEGER PRIMARY KEY AUTOINCREMENT, '
                 'title STRING, note TEXT, date STRING, '
                 'startTime STRING, endTime STRING, '
