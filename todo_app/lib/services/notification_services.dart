@@ -82,7 +82,7 @@ class NotifyHelper {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
-      payload: '${task.title}|${task.note}|${task.startTime}|',
+      payload: '${task.title}|${task.note}|${task.startTime}|${task.date}|',
     );
   }
 

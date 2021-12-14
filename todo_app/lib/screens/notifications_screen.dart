@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/constants/theme.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -10,14 +11,23 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  final String _payload = '';
+  String _payload = '';
+  @override
+  void initState() {
+    super.initState();
+    _payload = widget.payload;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(
               onPressed: () => Get.back(),
-              icon: const Icon(Icons.arrow_back_ios)),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Get.isDarkMode ? Colors.white : Colors.black54,
+              )),
           centerTitle: true,
           title: Text(
             "Notification",
@@ -54,59 +64,61 @@ class _NotificationScreenState extends State<NotificationScreen> {
             margin: const EdgeInsets.only(left: 20, right: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
-              color: primaryClr,
+              color: primaryClr.withOpacity(0.5),
             ),
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  // ignore: prefer_const_literals_to_create_immutables
                   Row(children: [
-                    Icon(
-                      Icons.text_format,
+                    const Icon(
+                      Icons.title_rounded,
                       size: 30,
                       color: Colors.white,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
-                    Text(_payload.toString().split("|")[0],
+                    const Text('Title',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                             fontFamily: "Roboto",
-                            fontWeight: FontWeight.w400)),
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w600)),
                   ]),
-                  const Text(
-                    "You have a new reminder",
+                  Text(
+                    _payload.toString().split("|")[0],
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: 18,
                         fontFamily: "Roboto",
-                        fontWeight: FontWeight.w400),
+                        fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(children: [
+                  Row(children: const [
                     Icon(
-                      Icons.description,
+                      Icons.text_snippet_rounded,
                       size: 30,
                       color: Colors.white,
                     ),
                     SizedBox(
                       width: 15,
                     ),
-                    Text(_payload.toString().split("|")[1],
+                    Text("Note",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
-                            fontFamily: "Roboto",
-                            fontWeight: FontWeight.w400)),
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w600)),
                   ]),
-                  const Text(
-                    "You have a new reminder",
+                  Text(
+                    _payload.toString().split("|")[1],
                     textAlign: TextAlign.justify,
                     style: TextStyle(
-                        color: Colors.black54,
+                        color: Colors.blueGrey[100],
                         fontSize: 18,
                         fontFamily: "Roboto",
                         fontWeight: FontWeight.w400),
@@ -114,7 +126,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(children: [
+                  Row(children: const [
                     Icon(
                       Icons.alarm_on_rounded,
                       size: 30,
@@ -123,15 +135,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     SizedBox(
                       width: 15,
                     ),
-                    Text(_payload.toString().split("|")[2],
+                    Text('Time',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                             fontFamily: "Roboto",
-                            fontWeight: FontWeight.w400)),
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w600)),
                   ]),
-                  const Text(
-                    "You have a new reminder",
+                  Text(
+                    _payload.toString().split("|")[2],
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: 18,
@@ -143,7 +156,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                   Row(children: const [
                     Icon(
-                      Icons.calendar_today_outlined,
+                      Icons.event_note_rounded,
                       size: 30,
                       color: Colors.white,
                     ),
@@ -155,10 +168,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             color: Colors.white,
                             fontSize: 18,
                             fontFamily: "Roboto",
-                            fontWeight: FontWeight.w400)),
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w600)),
                   ]),
-                  const Text(
-                    "You have a new reminder",
+                  Text(
+                    _payload.toString().split('|')[3],
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: 18,
