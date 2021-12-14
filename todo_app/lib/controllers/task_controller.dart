@@ -6,6 +6,7 @@ class TaskController extends GetxController {
   final RxList<Task> tasksList = <Task>[].obs;
 
   Future<int> addNewTask({required Task task}) {
+    print('From Controller${task.date}');
     return DBHelper.saveNewTask(task: task);
   }
 

@@ -28,6 +28,7 @@ class Task {
       'id': id,
       'title': title,
       'note': note,
+      'date': date,
       'startTime': startTime,
       'endTime': endTime,
       'isCompleted': isCompleted,

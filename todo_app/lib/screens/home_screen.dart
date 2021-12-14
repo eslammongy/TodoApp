@@ -26,7 +26,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TaskController taskController = Get.put(TaskController());
 
-  DateTime selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
   late NotifyHelper notificationHelper;
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           buildTaskBar(
-              selectedDate: selectedDate, taskController: taskController),
+              selectedDate: _selectedDate, taskController: taskController),
           displayCalenderView(),
           SizedBox(
             height: 10,
@@ -98,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 : buildTaskBottomSheet(
                     label: "Task Completed",
                     onTap: () {
+                      taskController.markTaskAsCompleted(taskID: task.id!);
                       Get.back();
                     },
                     color: primaryClr),
@@ -107,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
             buildTaskBottomSheet(
                 label: "Delete Task",
                 onTap: () {
+                  taskController.deleteSelectedTask(task: task);
                   Get.back();
                 },
                 color: primaryClr),
@@ -157,7 +159,8 @@ class _HomeScreenState extends State<HomeScreen> {
           selectedTextColor: Colors.white,
           onDateChange: (newDate) {
             setState(() {
-              selectedDate = newDate;
+              _selectedDate = newDate;
+              taskController.getAllTasks();
             });
           },
         ));
@@ -172,14 +175,15 @@ class _HomeScreenState extends State<HomeScreen> {
           return RefreshIndicator(
             onRefresh: () => taskController.getAllTasks(),
             child: ListView.builder(
-                scrollDirection: SizeConfig.orientation == Orientation.landscape
-                    ? Axis.horizontal
-                    : Axis.vertical,
-                physics: BouncingScrollPhysics(),
-                itemCount: taskController.tasksList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var task = taskController.tasksList[index];
+              scrollDirection: SizeConfig.orientation == Orientation.landscape
+                  ? Axis.horizontal
+                  : Axis.vertical,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                var task = taskController.tasksList[index];
 
+                if (task.repeat == "Daily" ||
+                    task.date == DateFormat.yMd().format(_selectedDate)) {
                   var date = DateFormat.jm().parse(task.startTime!);
                   var taskTime = DateFormat('HH:mm').format(date);
                   notificationHelper.scheduledNotification(
@@ -188,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       task);
                   return AnimationConfiguration.staggeredList(
                     position: index,
-                    duration: Duration(milliseconds: 1500),
+                    duration: Duration(milliseconds: 1200),
                     child: SlideAnimation(
                         horizontalOffset: 300,
                         child: FadeInAnimation(
@@ -198,7 +202,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: TaskTile(task)))),
                   );
-                }),
+                } else {
+                  return Container();
+                }
+              },
+              itemCount: taskController.tasksList.length,
+            ),
           );
         }
       }),
