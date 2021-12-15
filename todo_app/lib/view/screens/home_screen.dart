@@ -8,12 +8,12 @@ import 'package:todo_app/constants/size_config.dart';
 import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/controllers/task_controller.dart';
 import 'package:todo_app/model/task.dart';
-import 'package:todo_app/screens/widgets/task_tile.dart';
 import 'package:todo_app/services/notification_services.dart';
 import 'package:todo_app/services/theme_services.dart';
 import 'package:todo_app/view/widgets/custom_appbar.dart';
 import 'package:todo_app/view/widgets/display_task_upper_view.dart';
 import 'package:todo_app/view/widgets/task_bottom_sheet.dart';
+import 'package:todo_app/view/widgets/task_tile.dart';
 
 class HomeScreen extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -102,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     label: "Task Completed",
                     onTap: () {
                       taskController.markTaskAsCompleted(taskID: task.id!);
+                      notificationHelper.cancelNotification(task);
                       Get.back();
                     },
                     color: primaryClr),
@@ -112,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: "Delete Task",
                 onTap: () {
                   taskController.deleteSelectedTask(task: task);
+                  notificationHelper.cancelNotification(task);
                   Get.back();
                 },
                 color: Colors.red[800]!),
@@ -186,7 +188,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 var task = taskController.tasksList[index];
 
                 if (task.repeat == "Daily" ||
-                    task.date == DateFormat.yMd().format(_selectedDate)) {
+                    task.date == DateFormat.yMd().format(_selectedDate) ||
+                    (task.repeat == 'Weekly' &&
+                        _selectedDate
+                                    .difference(
+                                        DateFormat.yMd().parse(task.date!))
+                                    .inDays %
+                                7 ==
+                            0) ||
+                    (task.repeat == "Monthly" &&
+                        DateFormat.yMd().parse(task.date!).day ==
+                            _selectedDate.day)) {
                   var date = DateFormat.jm().parse(task.startTime!);
                   var taskTime = DateFormat('HH:mm').format(date);
                   notificationHelper.scheduledNotification(
