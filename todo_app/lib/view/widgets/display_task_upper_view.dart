@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/controllers/task_controller.dart';
+import 'package:todo_app/view/screens/add_new_task.dart';
 
-import '../add_new_task.dart';
 import 'custom__button.dart';
 
 Widget buildTaskBar(

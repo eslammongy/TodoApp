@@ -3,8 +3,9 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/db/db_helper.dart';
-import 'package:todo_app/screens/splash_screen.dart';
 import 'package:todo_app/services/theme_services.dart';
+
+import 'view/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

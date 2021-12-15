@@ -4,11 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/constants/theme.dart';
 import 'package:todo_app/controllers/task_controller.dart';
 import 'package:todo_app/model/task.dart';
-import 'package:todo_app/screens/widgets/custom__button.dart';
-import 'package:todo_app/screens/widgets/flusher_bar.dart';
-import 'package:todo_app/screens/widgets/input_from_field.dart';
-
-import 'widgets/custom_appbar.dart';
+import 'package:todo_app/view/widgets/custom__button.dart';
+import 'package:todo_app/view/widgets/custom_appbar.dart';
+import 'package:todo_app/view/widgets/flusher_bar.dart';
+import 'package:todo_app/view/widgets/input_from_field.dart';
 
 class AddNewTask extends StatefulWidget {
   const AddNewTask({Key? key}) : super(key: key);
