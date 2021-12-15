@@ -72,12 +72,10 @@ class NotifyHelper {
       task.id!,
       task.title,
       task.note,
-      //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
       _nextInstanceOfTenAM(
           hour, minutes, task.remind!, task.repeat!, task.date!),
       const NotificationDetails(
-        android:
-            AndroidNotificationDetails('your channel id', 'your channel name'),
+        android: AndroidNotificationDetails('Helper Channel', 'Channel Task'),
       ),
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
@@ -90,11 +88,15 @@ class NotifyHelper {
   tz.TZDateTime _nextInstanceOfTenAM(
       int hour, int minutes, int remind, String repeat, String date) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
 
     var formattedDate = DateFormat.yMd().parse(date);
-    scheduledDate = afterRemindTask(remind, scheduledDate);
+    final tz.TZDateTime localDateFormat =
+        tz.TZDateTime.from(formattedDate, tz.local);
+
+    tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local, localDateFormat.year,
+        localDateFormat.month, localDateFormat.day, hour, minutes);
+
+    scheduledDate = afterRemindedTask(remind, scheduledDate);
     if (scheduledDate.isBefore(now)) {
       if (repeat == 'Daily') {
         scheduledDate = tz.TZDateTime(tz.local, now.year, now.month,
@@ -108,12 +110,13 @@ class NotifyHelper {
         scheduledDate = tz.TZDateTime(tz.local, now.year,
             (formattedDate.month) + 1, (formattedDate.day), hour, minutes);
       }
+      scheduledDate = afterRemindedTask(remind, scheduledDate);
     }
-    scheduledDate = afterRemindTask(remind, scheduledDate);
+
     return scheduledDate;
   }
 
-  tz.TZDateTime afterRemindTask(int remind, tz.TZDateTime scheduledDate) {
+  tz.TZDateTime afterRemindedTask(int remind, tz.TZDateTime scheduledDate) {
     if (remind == 5) {
       scheduledDate = scheduledDate.subtract(const Duration(minutes: 5));
     }
