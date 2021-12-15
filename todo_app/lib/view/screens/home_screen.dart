@@ -11,6 +11,7 @@ import 'package:todo_app/model/task.dart';
 import 'package:todo_app/services/notification_services.dart';
 import 'package:todo_app/services/theme_services.dart';
 import 'package:todo_app/view/widgets/custom_appbar.dart';
+import 'package:todo_app/view/widgets/deleted_dialog.dart';
 import 'package:todo_app/view/widgets/display_task_upper_view.dart';
 import 'package:todo_app/view/widgets/task_bottom_sheet.dart';
 import 'package:todo_app/view/widgets/task_tile.dart';
@@ -44,16 +45,20 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: buildCustomAppBar(
           context: context,
           title: "Home",
-          widget: IconButton(
-              onPressed: () {
-                ThemeServices().switchThemeMode();
-              },
-              icon: Icon(
-                Get.isDarkMode
-                    ? Icons.wb_sunny_outlined
-                    : Icons.nightlight_round_outlined,
-                color: Get.isDarkMode ? orangeClr : darkGreyClr,
-              ))),
+          widget: Expanded(
+            child: IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  ThemeServices().switchThemeMode();
+                },
+                icon: Icon(
+                  Get.isDarkMode
+                      ? Icons.wb_sunny_outlined
+                      : Icons.nightlight_round_outlined,
+                  color: Get.isDarkMode ? orangeClr : darkGreyClr,
+                  size: 25,
+                )),
+          )),
       body: Column(
         children: [
           buildTaskBar(
