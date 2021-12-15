@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:todo_app/constants/size_config.dart';
 import 'package:todo_app/constants/theme.dart';
 
-Widget buildTaskBottomSheet(
+Widget buildTaskBottomSheetButtons(
     {required String label,
     required Function()? onTap,
     required Color color,

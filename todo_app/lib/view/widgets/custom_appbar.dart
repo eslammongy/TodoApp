@@ -27,9 +27,12 @@ AppBar buildCustomAppBar(
           width: 15,
         ),
         CircleAvatar(
+          radius: 22,
           backgroundColor: Colors.white,
-          backgroundImage: AssetImage('assets/images/doings.png'),
-          radius: 20,
+          child: CircleAvatar(
+            backgroundImage: AssetImage('assets/images/doings.png'),
+            radius: 20,
+          ),
         ),
         SizedBox(
           width: 15,

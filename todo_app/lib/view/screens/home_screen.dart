@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             task.isCompleted == 1
                 ? Container()
-                : buildTaskBottomSheet(
+                : buildTaskBottomSheetButtons(
                     label: "Task Completed",
                     onTap: () {
                       taskController.markTaskAsCompleted(taskID: task.id!);
@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Divider(
               color: Get.isDarkMode ? Colors.grey : darkGreyClr,
             ),
-            buildTaskBottomSheet(
+            buildTaskBottomSheetButtons(
                 label: "Delete Task",
                 onTap: () {
                   taskController.deleteSelectedTask(task: task);
@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Divider(
               color: Get.isDarkMode ? Colors.grey : darkGreyClr,
             ),
-            buildTaskBottomSheet(
+            buildTaskBottomSheetButtons(
                 label: "Cancel",
                 onTap: () {
                   Get.back();
