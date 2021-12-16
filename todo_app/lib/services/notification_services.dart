@@ -147,6 +147,10 @@ class NotifyHelper {
     await flutterLocalNotificationsPlugin.cancel(task.id!);
   }
 
+  cancelAllNotification() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
   Future<void> _configureLocalTimeZone() async {
     tz.initializeTimeZones();
     final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();

@@ -10,8 +10,8 @@ import 'package:todo_app/controllers/task_controller.dart';
 import 'package:todo_app/model/task.dart';
 import 'package:todo_app/services/notification_services.dart';
 import 'package:todo_app/services/theme_services.dart';
+import 'package:todo_app/view/widgets/custom__button.dart';
 import 'package:todo_app/view/widgets/custom_appbar.dart';
-import 'package:todo_app/view/widgets/deleted_dialog.dart';
 import 'package:todo_app/view/widgets/display_task_upper_view.dart';
 import 'package:todo_app/view/widgets/task_bottom_sheet.dart';
 import 'package:todo_app/view/widgets/task_tile.dart';
@@ -44,21 +44,23 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: buildCustomAppBar(
           context: context,
+          deleteVisiable: true,
+          deleteTasks: () {
+            displayDeleteDialog();
+          },
           title: "Home",
-          widget: Expanded(
-            child: IconButton(
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  ThemeServices().switchThemeMode();
-                },
-                icon: Icon(
-                  Get.isDarkMode
-                      ? Icons.wb_sunny_outlined
-                      : Icons.nightlight_round_outlined,
-                  color: Get.isDarkMode ? orangeClr : darkGreyClr,
-                  size: 25,
-                )),
-          )),
+          widget: IconButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                ThemeServices().switchThemeMode();
+              },
+              icon: Icon(
+                Get.isDarkMode
+                    ? Icons.wb_sunny_outlined
+                    : Icons.nightlight_round_outlined,
+                color: Get.isDarkMode ? orangeClr : darkGreyClr,
+                size: 25,
+              ))),
       body: Column(
         children: [
           buildTaskBar(
@@ -284,5 +286,84 @@ class _HomeScreenState extends State<HomeScreen> {
         )
       ],
     );
+  }
+
+  void displayDeleteDialog() {
+    showGeneralDialog(
+        context: context,
+        pageBuilder:
+            (context, Animation animation, Animation secondaryAnimation) {
+          return Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: (MediaQuery.of(context).size.width * 0.10),
+                vertical: MediaQuery.of(context).size.height * 0.3),
+            decoration: BoxDecoration(
+              color: Get.isDarkMode ? darkGreyClr : Colors.white,
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Icon(
+                  Icons.cleaning_services_rounded,
+                  size: 50,
+                  color: Colors.red[800],
+                ),
+                SizedBox(
+                  height: 18,
+                ),
+                Material(
+                  color: Get.isDarkMode ? darkGreyClr : Colors.white,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                    child: Text(
+                      "Are you sure that you want to delete all tasks",
+                      textAlign: TextAlign.center,
+                      style: subHeadingStyle,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Wrap(
+                  direction: Axis.horizontal,
+                  spacing: 10.0,
+                  children: [
+                    CustomButton(
+                        label: 'Cancel',
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        height: 50,
+                        width: 100),
+                    SizedBox(
+                      height: 60,
+                    ),
+                    CustomButton(
+                        label: 'Yes',
+                        onTap: () async {
+                          taskController.deleteAllTasks();
+
+                          Navigator.pop(context);
+                        },
+                        height: 50,
+                        width: 100)
+                  ],
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+              ],
+            ),
+          );
+        },
+        transitionBuilder: (context, anim1, anim2, child) {
+          return SlideTransition(
+            position: Tween(begin: const Offset(0, 1), end: const Offset(0, 0))
+                .animate(anim1),
+            child: child,
+          );
+        });
   }
 }

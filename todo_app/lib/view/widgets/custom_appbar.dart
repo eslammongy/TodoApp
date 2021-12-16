@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/constants/theme.dart';
-import 'package:todo_app/view/widgets/deleted_dialog.dart';
 
 AppBar buildCustomAppBar(
     {required BuildContext context,
     required String title,
+    Function()? deleteTasks,
+    required bool deleteVisiable,
     required Widget widget}) {
   return AppBar(
       titleSpacing: 0.0,
@@ -13,16 +14,16 @@ AppBar buildCustomAppBar(
       elevation: 0,
       leading: widget,
       actions: [
-        IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              displayDeleteDialog(context);
-            },
-            icon: Icon(
-              Icons.delete_sweep_sharp,
-              color: Get.isDarkMode ? orangeClr : darkGreyClr,
-              size: 25,
-            )),
+        deleteVisiable
+            ? IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: deleteTasks,
+                icon: Icon(
+                  Icons.cleaning_services_rounded,
+                  color: Get.isDarkMode ? orangeClr : darkGreyClr,
+                  size: 25,
+                ))
+            : Container(),
         SizedBox(
           width: 15,
         ),

@@ -9,12 +9,14 @@ class CustomeInputField extends StatelessWidget {
       {Key? key,
       required this.title,
       required this.hint,
+      required this.height,
       this.textEditingController,
       this.widget})
       : super(key: key);
 
   final String hint;
   final String title;
+  final double height;
   final TextEditingController? textEditingController;
   final Widget? widget;
 
@@ -30,7 +32,7 @@ class CustomeInputField extends StatelessWidget {
               style: titleStyle,
             ),
             Container(
-              height: 55,
+              height: height,
               width: SizeConfig.screenWidth,
               padding: const EdgeInsets.only(left: 10),
               margin: const EdgeInsets.only(top: 8),
@@ -47,6 +49,9 @@ class CustomeInputField extends StatelessWidget {
                     controller: textEditingController,
                     autofocus: false,
                     readOnly: widget != null ? true : false,
+                    textAlignVertical: TextAlignVertical.top,
+                    expands: true,
+                    maxLines: null,
                     cursorColor:
                         Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
                     style: titleStyle,

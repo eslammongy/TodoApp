@@ -36,6 +36,8 @@ class _AddNewTaskState extends State<AddNewTask> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: buildCustomAppBar(
+            deleteVisiable: false,
+            deleteTasks: () {},
             context: context,
             title: "Add New Task",
             widget: IconButton(
@@ -53,13 +55,16 @@ class _AddNewTaskState extends State<AddNewTask> {
                   title: "Title",
                   hint: "enter title here",
                   textEditingController: titleController,
+                  height: 55,
                 ),
                 CustomeInputField(
+                  height: 140,
                   title: "Note",
                   hint: "enter note here",
                   textEditingController: descController,
                 ),
                 CustomeInputField(
+                  height: 55,
                   title: "Date",
                   hint: DateFormat.yMd().format(selectedDate),
                   widget: IconButton(
@@ -75,6 +80,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                   children: [
                     Expanded(
                         child: CustomeInputField(
+                      height: 55,
                       title: "Start Time",
                       hint: startTime,
                       widget: IconButton(
@@ -91,6 +97,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                     ),
                     Expanded(
                         child: CustomeInputField(
+                      height: 55,
                       title: "End Time",
                       hint: endTime,
                       widget: IconButton(
@@ -104,77 +111,90 @@ class _AddNewTaskState extends State<AddNewTask> {
                     ))
                   ],
                 ),
-                CustomeInputField(
-                  title: "Remind",
-                  hint: '$selectedRemind minutes early',
-                  widget: Row(
-                    children: [
-                      DropdownButton(
-                        borderRadius: BorderRadius.circular(15),
-                        items: remindList
-                            .map<DropdownMenuItem<String>>(
-                                (int item) => DropdownMenuItem<String>(
-                                    value: item.toString(),
-                                    child: Text(
-                                      "$item",
-                                      style: titleStyle,
-                                    )))
-                            .toList(),
-                        icon: Icon(
-                          Icons.arrow_drop_down,
-                          color: Colors.grey,
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomeInputField(
+                        height: 55,
+                        title: "Remind",
+                        hint: '$selectedRemind min early',
+                        widget: Row(
+                          children: [
+                            DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              items: remindList
+                                  .map<DropdownMenuItem<String>>(
+                                      (int item) => DropdownMenuItem<String>(
+                                          value: item.toString(),
+                                          child: Text(
+                                            "$item",
+                                            style: titleStyle,
+                                          )))
+                                  .toList(),
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.grey,
+                              ),
+                              elevation: 5,
+                              underline: Container(
+                                height: 0,
+                              ),
+                              onChanged: (String? value) {
+                                setState(() {
+                                  selectedRemind = int.parse(value!);
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 5,
+                            )
+                          ],
                         ),
-                        elevation: 5,
-                        underline: Container(
-                          height: 0,
-                        ),
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedRemind = int.parse(value!);
-                          });
-                        },
                       ),
-                      SizedBox(
-                        width: 5,
-                      )
-                    ],
-                  ),
-                ),
-                CustomeInputField(
-                  title: "Rebeat",
-                  hint: selectedRebeat,
-                  widget: Row(
-                    children: [
-                      DropdownButton(
-                        borderRadius: BorderRadius.circular(15),
-                        items: rebeatList
-                            .map<DropdownMenuItem<String>>(
-                                (String item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: titleStyle,
-                                    )))
-                            .toList(),
-                        icon: Icon(
-                          Icons.arrow_drop_down,
-                          color: Colors.grey,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: CustomeInputField(
+                        height: 55,
+                        title: "Rebeat",
+                        hint: selectedRebeat,
+                        widget: Row(
+                          children: [
+                            DropdownButton(
+                              borderRadius: BorderRadius.circular(15),
+                              items: rebeatList
+                                  .map<DropdownMenuItem<String>>(
+                                      (String item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: titleStyle,
+                                          )))
+                                  .toList(),
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.grey,
+                              ),
+                              elevation: 5,
+                              underline: Container(
+                                height: 0,
+                              ),
+                              onChanged: (String? value) {
+                                setState(() {
+                                  selectedRebeat = value!;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 5,
+                            )
+                          ],
                         ),
-                        elevation: 5,
-                        underline: Container(
-                          height: 0,
-                        ),
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedRebeat = value!;
-                          });
-                        },
                       ),
-                      SizedBox(
-                        width: 5,
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
                 const SizedBox(
                   height: 5,
@@ -192,7 +212,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                             onTap: () {
                               validateData();
                             },
-                            height: 50,
+                            height: 55,
                             width: 100),
                       ],
                     ),
