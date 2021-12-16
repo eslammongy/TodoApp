@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:todo_app/constants/theme.dart';
+import 'package:todo_app/view/screens/take_user_info.dart';
 
 import 'home_screen.dart';
 
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => TakeUserInfo()));
     });
   }
 
@@ -28,17 +29,24 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: darkGreyClr,
+          backgroundColor: Colors.black54,
           systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: Colors.black54,
-              systemNavigationBarColor: Colors.black54)),
+              statusBarColor: darkGreyClr,
+              systemNavigationBarColor: darkGreyClr)),
       backgroundColor: darkGreyClr,
       body: Container(
-        color: darkGreyClr,
+        decoration: BoxDecoration(
+          color: Colors.black54,
+          /*  gradient: LinearGradient(
+                begin: AlignmentDirectional.bottomEnd,
+                end: AlignmentDirectional.topStart,
+                stops: const [0.0, 0.5, 1.0],
+                colors: const [Colors.black87, darkGreyClr, Colors.black38]) */
+        ),
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.20,
+              height: MediaQuery.of(context).size.height * 0.16,
             ),
             Container(
               padding: EdgeInsets.zero,
