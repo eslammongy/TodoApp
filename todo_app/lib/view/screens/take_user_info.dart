@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/constants/theme.dart';
+import 'package:todo_app/view/screens/welcome_user.dart';
+import 'package:todo_app/view/widgets/list_avatars.dart';
 
 class TakeUserInfo extends StatelessWidget {
   TakeUserInfo({Key? key}) : super(key: key);
@@ -31,7 +34,9 @@ class TakeUserInfo extends StatelessWidget {
                 height: 25,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Get.to(WelcomeToUser());
+                },
                 child: Align(
                   alignment: AlignmentDirectional.topEnd,
                   child: Text('Skip',
@@ -72,12 +77,15 @@ class TakeUserInfo extends StatelessWidget {
                   Positioned(
                     right: 0.0,
                     bottom: 1.0,
-                    child: CircleAvatar(
-                      radius: 15.0,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.photo_camera,
-                        color: Colors.black87,
+                    child: InkWell(
+                      onTap: () => displayAvatarDialog(context),
+                      child: CircleAvatar(
+                        radius: 15.0,
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          Icons.photo_camera,
+                          color: Colors.black87,
+                        ),
                       ),
                     ),
                   ),
