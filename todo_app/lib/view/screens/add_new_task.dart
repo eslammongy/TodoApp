@@ -58,7 +58,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                   height: 55,
                 ),
                 CustomeInputField(
-                  height: 140,
+                  height: 160,
                   title: "Note",
                   hint: "enter note here",
                   textEditingController: descController,

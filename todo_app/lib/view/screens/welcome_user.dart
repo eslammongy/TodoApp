@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/constants/size_config.dart';
 import 'package:todo_app/constants/theme.dart';
+import 'package:todo_app/view/screens/home_screen.dart';
 
 class WelcomeToUser extends StatelessWidget {
   const WelcomeToUser({Key? key}) : super(key: key);
@@ -63,7 +65,9 @@ class WelcomeToUser extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10), color: orangeClr),
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(HomeScreen());
+                    },
                     child: Text('''Let's Go''',
                         style: GoogleFonts.balsamiqSans(
                           textStyle: TextStyle(

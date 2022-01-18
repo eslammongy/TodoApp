@@ -53,14 +53,26 @@ void displayAvatarDialog(BuildContext context) {
                   child: GridView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                    padding: EdgeInsets.all(15),
-                    height: 55,
-                    width: 55,
-                    child: Image(
-                      image: AssetImage(listOfAvatares[index]),
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.fill,
+                    padding: EdgeInsets.all(10),
+                    height: 60,
+                    width: 60,
+                    child: Material(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                      child: InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          child: Image(
+                            image: AssetImage(listOfAvatares[index]),
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                     ),
                   );
                 },
